@@ -28,7 +28,10 @@ export default defineConfig({
 		react(),
 		svgr(),
 		cloudflare({
-			configPath: 'wrangler.jsonc',
+			configPath:
+				process.env.DEV_MODE === 'true'
+					? 'wrangler.local.jsonc'
+					: 'wrangler.jsonc',
 		}),
 		tailwindcss(),
 		// sentryVitePlugin({

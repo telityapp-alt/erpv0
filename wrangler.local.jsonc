@@ -1,0 +1,116 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "erpeos-local",
+	"main": "worker/index.local.ts",
+	"compatibility_date": "2026-05-23",
+	"compatibility_flags": ["nodejs_compat"],
+	"assets": {
+		"directory": "dist/client",
+		"not_found_handling": "single-page-application",
+		"run_worker_first": true,
+		"binding": "ASSETS"
+	},
+	"observability": {
+		"enabled": true,
+		"head_sampling_rate": 1,
+		"logs": {
+			"enabled": true,
+			"invocation_logs": true
+		},
+		"traces": {
+			"enabled": true
+		}
+	},
+	"unsafe": {
+		"bindings": [
+			{
+				"name": "API_RATE_LIMITER",
+				"type": "ratelimit",
+				"namespace_id": "2101",
+				"simple": { "limit": 10000, "period": 60 }
+			},
+			{
+				"name": "AUTH_RATE_LIMITER",
+				"type": "ratelimit",
+				"namespace_id": "2102",
+				"simple": { "limit": 1000, "period": 60 }
+			}
+		]
+	},
+	"ai": {
+		"binding": "AI",
+		"remote": true
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "erpeos-db",
+			"database_id": "1b7bc830-883e-47ba-84cc-bdbaf4e8b293",
+			"migrations_dir": "migrations"
+		}
+	],
+	"durable_objects": {
+		"bindings": [
+			{
+				"class_name": "DORateLimitStore",
+				"name": "DORateLimitStore"
+			},
+			{
+				"class_name": "UserSecretsStore",
+				"name": "UserSecretsStore"
+			}
+		]
+	},
+	"kv_namespaces": [
+		{
+			"binding": "VibecoderStore",
+			"id": "8e5c9e2226e446dfab57a25ea5becce2"
+		}
+	],
+	"r2_buckets": [
+		{
+			"binding": "TEMPLATES_BUCKET",
+			"bucket_name": "erpeos-templates"
+		}
+	],
+	"migrations": [
+		{
+			"new_sqlite_classes": [
+				"DORateLimitStore"
+			],
+			"tag": "v2"
+		},
+		{
+			"new_sqlite_classes": [
+				"UserSecretsStore"
+			],
+			"tag": "v3"
+		}
+	],
+	"vars": {
+		"TEMPLATES_REPOSITORY": "https://github.com/cloudflare/vibesdk-templates",
+		"ALLOWED_EMAIL": "",
+		"DISPATCH_NAMESPACE": "",
+		"ENABLE_READ_REPLICAS": "true",
+		"CLOUDFLARE_AI_GATEWAY": "aire-gateway",
+		"PLATFORM_CAPABILITIES": {
+			"features": {
+				"app": {
+					"enabled": true
+				},
+				"presentation": {
+					"enabled": false
+				},
+				"general": {
+					"enabled": false
+				}
+			},
+			"version": "1.0.0"
+		},
+		"CUSTOM_DOMAIN": "localhost",
+		"MAX_SANDBOX_INSTANCES": "10",
+		"SANDBOX_INSTANCE_TYPE": "standard-3",
+		"DEV_BROWSER_SIDECAR_URL": "http://127.0.0.1:9223",
+		"DEV_BROWSER_PREVIEW_ORIGIN": "http://localhost:5173"
+	}
+}

@@ -1,4 +1,4 @@
-import { 
+import {
     AgentActionKey, 
     AgentConfig, 
     AgentConstraintConfig, 
@@ -8,6 +8,8 @@ import {
     RegularModels,
 } from "./config.types";
 import { env } from 'cloudflare:workers';
+
+const externalGatewayModel = env.EXTERNAL_AI_GATEWAY_MODEL?.trim() || null;
 
 // Common configs - these are good defaults
 const COMMON_AGENT_CONFIGS = {
@@ -19,11 +21,11 @@ const COMMON_AGENT_CONFIGS = {
         fallbackModel: AIModels.GEMINI_2_5_FLASH,
     },
     realtimeCodeFixer: {
-        name: AIModels.GROK_4_1_FAST_NON_REASONING,
+        name: externalGatewayModel ?? AIModels.GROK_4_1_FAST_NON_REASONING,
         reasoning_effort: 'low' as const,
         max_tokens: 32000,
         temperature: 0.2,
-        fallbackModel: AIModels.GEMINI_2_5_FLASH,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH,
     },
     fastCodeFixer: {
         name: AIModels.DISABLED,
@@ -33,9 +35,9 @@ const COMMON_AGENT_CONFIGS = {
         fallbackModel: AIModels.GEMINI_2_5_PRO,
     },
     templateSelection: {
-        name: AIModels.GEMINI_2_5_FLASH_LITE,
+        name: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH_LITE,
         max_tokens: 2000,
-        fallbackModel: AIModels.GROK_4_1_FAST_NON_REASONING,
+        fallbackModel: externalGatewayModel ?? AIModels.GROK_4_1_FAST_NON_REASONING,
         temperature: 1,
     },
 } as const;
@@ -44,7 +46,7 @@ const SHARED_IMPLEMENTATION_CONFIG = {
     reasoning_effort: 'low' as const,
     max_tokens: 48000,
     temperature: 1,
-    fallbackModel: AIModels.GEMINI_2_5_PRO,
+    fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_PRO,
 };
 
 //======================================================================================
@@ -58,61 +60,61 @@ Cloudflare AI Gateway unified billing for seamless model access without managing
 const PLATFORM_AGENT_CONFIG: AgentConfig = {
     ...COMMON_AGENT_CONFIGS,
     blueprint: {
-        name: AIModels.GEMINI_3_PRO_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_PRO_PREVIEW,
         reasoning_effort: 'high',
         max_tokens: 20000,
-        fallbackModel: AIModels.GEMINI_2_5_FLASH,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH,
         temperature: 1.0,
     },
     projectSetup: {
-        name: AIModels.GROK_4_1_FAST,
+        name: externalGatewayModel ?? AIModels.GROK_4_1_FAST,
         reasoning_effort: 'medium',
         max_tokens: 8000,
         temperature: 1,
-        fallbackModel: AIModels.GEMINI_2_5_PRO,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_PRO,
     },
     phaseGeneration: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         reasoning_effort: 'medium',
         max_tokens: 8000,
         temperature: 1,
-        fallbackModel: AIModels.OPENAI_5_MINI,
+        fallbackModel: externalGatewayModel ?? AIModels.OPENAI_5_MINI,
     },
     firstPhaseImplementation: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         ...SHARED_IMPLEMENTATION_CONFIG,
     },
     phaseImplementation: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         ...SHARED_IMPLEMENTATION_CONFIG,
     },
     conversationalResponse: {
-        name: AIModels.GROK_4_1_FAST,
+        name: externalGatewayModel ?? AIModels.GROK_4_1_FAST,
         reasoning_effort: 'low',
         max_tokens: 4000,
         temperature: 1,
-        fallbackModel: AIModels.GEMINI_2_5_FLASH,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH,
     },
     deepDebugger: {
-        name: AIModels.GROK_4_1_FAST,
+        name: externalGatewayModel ?? AIModels.GROK_4_1_FAST,
         reasoning_effort: 'high',
         max_tokens: 8000,
         temperature: 1,
-        fallbackModel: AIModels.GEMINI_2_5_PRO,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_PRO,
     },
     fileRegeneration: {
-        name: AIModels.GROK_4_1_FAST_NON_REASONING,
+        name: externalGatewayModel ?? AIModels.GROK_4_1_FAST_NON_REASONING,
         reasoning_effort: 'low',
         max_tokens: 16000,
         temperature: 0.0,
-        fallbackModel: AIModels.GROK_CODE_FAST_1,
+        fallbackModel: externalGatewayModel ?? AIModels.GROK_CODE_FAST_1,
     },
     agenticProjectBuilder: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         reasoning_effort: 'medium',
         max_tokens: 8000,
         temperature: 1,
-        fallbackModel: AIModels.GEMINI_2_5_PRO,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_PRO,
     },
 };
 
@@ -123,61 +125,61 @@ const PLATFORM_AGENT_CONFIG: AgentConfig = {
 const DEFAULT_AGENT_CONFIG: AgentConfig = {
     ...COMMON_AGENT_CONFIGS,
     templateSelection: {
-        name: AIModels.GEMINI_2_5_FLASH_LITE,
+        name: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH_LITE,
         max_tokens: 2000,
-        fallbackModel: AIModels.GEMINI_2_5_FLASH,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH,
         temperature: 0.6,
     },
     blueprint: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         reasoning_effort: 'high',
         max_tokens: 64000,
-        fallbackModel: AIModels.GEMINI_2_5_PRO,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_PRO,
         temperature: 1,
     },
     projectSetup: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         ...SHARED_IMPLEMENTATION_CONFIG,
     },
     phaseGeneration: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         ...SHARED_IMPLEMENTATION_CONFIG,
     },
     firstPhaseImplementation: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         ...SHARED_IMPLEMENTATION_CONFIG,
     },
     phaseImplementation: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         ...SHARED_IMPLEMENTATION_CONFIG,
     },
     conversationalResponse: {
-        name: AIModels.GEMINI_2_5_FLASH,
+        name: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH,
         reasoning_effort: 'low',
         max_tokens: 4000,
         temperature: 0,
-        fallbackModel: AIModels.GEMINI_2_5_PRO,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_PRO,
     },
     deepDebugger: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         reasoning_effort: 'high',
         max_tokens: 8000,
         temperature: 1,
-        fallbackModel: AIModels.GEMINI_2_5_FLASH,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH,
     },
     fileRegeneration: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         reasoning_effort: 'low',
         max_tokens: 32000,
         temperature: 1,
-        fallbackModel: AIModels.GEMINI_2_5_FLASH,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH,
     },
     agenticProjectBuilder: {
-        name: AIModels.GEMINI_3_FLASH_PREVIEW,
+        name: externalGatewayModel ?? AIModels.GEMINI_3_FLASH_PREVIEW,
         reasoning_effort: 'high',
         max_tokens: 8000,
         temperature: 1,
-        fallbackModel: AIModels.GEMINI_2_5_FLASH,
+        fallbackModel: externalGatewayModel ?? AIModels.GEMINI_2_5_FLASH,
     },
 };
 

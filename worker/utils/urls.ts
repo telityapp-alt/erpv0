@@ -109,6 +109,16 @@ export function migratePreviewUrl(storedUrl: string | undefined, env: Env): stri
         const hostname = url.hostname;
         const currentDomain = getPreviewDomain(env);
 
+        // Preserve fully external preview providers (for example Daytona signed preview URLs)
+        // instead of rewriting them onto our Cloudflare preview domain.
+        if (
+            hostname.includes('daytona') ||
+            url.searchParams.has('token') ||
+            (!hostname.endsWith('.workers.dev') && !hostname.endsWith(`.${currentDomain}`))
+        ) {
+            return storedUrl;
+        }
+
         // Already using current domain
         if (hostname.endsWith(`.${currentDomain}`)) {
             return storedUrl;

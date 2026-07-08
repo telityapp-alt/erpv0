@@ -178,10 +178,8 @@ export function getSecureHeadersConfig(env: Env): SecureHeadersConfig {
             defaultSrc: ["'self'"],
             scriptSrc: [
                 "'self'",
-                // Allow inline scripts with nonce (Hono will add nonce automatically)
-                "'strict-dynamic'",
-                // Development only - for hot reload
-                ...(isDevelopment ? ["'unsafe-eval'"] : [])
+                // Development only - required for Vite's inline HMR bootstrap.
+                ...(isDevelopment ? ["'unsafe-inline'", "'unsafe-eval'"] : [])
             ],
             styleSrc: [
                 "'self'",

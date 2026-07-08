@@ -995,12 +995,24 @@ class CloudflareDeploymentManager {
 	/**
 	 * Updates wrangler.jsonc for workers.dev deployment (no custom domain)
 	 */
-	private updateWranglerForWorkersDev(content: string): string {
+	private updateWranglerForWorkersDev(content: string, workersDevDomain?: string): string {
 		let updatedContent = content;
 		
 		// Remove routes property if it exists
 		const removeRoutesEdits = modify(content, ['routes'], undefined, CloudflareDeploymentManager.JSONC_FORMAT_OPTIONS);
 		updatedContent = applyEdits(updatedContent, removeRoutesEdits);
+
+		// Keep CUSTOM_DOMAIN populated when deploying to workers.dev so the runtime
+		// still has a canonical host for routing and preview URL generation.
+		if (workersDevDomain && workersDevDomain.trim() !== '') {
+			const customDomainEdits = modify(
+				updatedContent,
+				['vars', 'CUSTOM_DOMAIN'],
+				workersDevDomain,
+				CloudflareDeploymentManager.JSONC_FORMAT_OPTIONS,
+			);
+			updatedContent = applyEdits(updatedContent, customDomainEdits);
+		}
 		
 		// Set workers_dev = true and preview_urls = true
 		updatedContent = this.updateWranglerField(updatedContent, 'workers_dev', true);
@@ -1082,6 +1094,23 @@ class CloudflareDeploymentManager {
 					'- Set preview_urls: true'
 				]);
 				return '';
+			}
+
+			if (customDomain.endsWith('.workers.dev')) {
+				console.log(
+					`ℹ️  CUSTOM_DOMAIN uses workers.dev (${customDomain}) - enabling workers.dev deployment without custom routes`,
+				);
+
+				const updatedContent = this.updateWranglerForWorkersDev(content, customDomain);
+				this.writeWranglerConfig(updatedContent);
+
+				this.logSuccess('Updated wrangler.jsonc for workers.dev hostname deployment:', [
+					'- Removed routes configuration',
+					`- Preserved vars.CUSTOM_DOMAIN: ${customDomain}`,
+					'- Set workers_dev: true',
+					'- Set preview_urls: true'
+				]);
+				return customDomain;
 			}
 
 			console.log(

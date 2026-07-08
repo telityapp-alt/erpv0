@@ -19,6 +19,13 @@ export interface PasswordValidationResult {
   valid: boolean;
   errors?: string[];
   score: number; // 0-4 strength score
+  requirements?: {
+    minLength: boolean;
+    hasLowercase: boolean;
+    hasUppercase: boolean;
+    hasNumbers: boolean;
+    hasSpecialChars: boolean;
+  };
   suggestions?: string[];
 }
 
@@ -83,6 +90,26 @@ export function validatePassword(
     errors.push('Password must be less than 128 characters long');
   }
 
+  const requirements = {
+    minLength: password.length >= 8,
+    hasLowercase: /[a-z]/.test(password),
+    hasUppercase: /[A-Z]/.test(password),
+    hasNumbers: /[0-9]/.test(password),
+    hasSpecialChars: /[^a-zA-Z0-9]/.test(password),
+  };
+
+  if (!requirements.hasLowercase) {
+    errors.push('Password must contain at least one lowercase letter');
+  }
+
+  if (!requirements.hasUppercase) {
+    errors.push('Password must contain at least one uppercase letter');
+  }
+
+  if (!requirements.hasNumbers) {
+    errors.push('Password must contain at least one number');
+  }
+
   // Generate suggestions
   const suggestions: string[] = [];
   if (password.length < 12) {
@@ -93,6 +120,7 @@ export function validatePassword(
     valid: errors.length === 0,
     errors: errors.length > 0 ? errors : undefined,
     score: Math.min(4, Math.max(0, score)),
+    requirements,
     suggestions: suggestions.length > 0 ? suggestions : undefined
   };
 }

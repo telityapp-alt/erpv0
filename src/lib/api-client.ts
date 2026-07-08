@@ -351,8 +351,41 @@ class ApiClient {
 			if (options.skipJsonParsing && response.ok) {
 				return { response, data: null };
 			}
-			
-			const data = await response.json() as ApiResponse<T>;
+
+			const contentType = response.headers.get('content-type') || '';
+			const isJsonResponse = contentType.includes('application/json');
+			let data: ApiResponse<T> | null = null;
+			let responseText: string | null = null;
+
+			if (isJsonResponse) {
+				data = await response.json() as ApiResponse<T>;
+			} else {
+				responseText = await response.text();
+			}
+
+			if (!isJsonResponse) {
+				const trimmedText = responseText?.trim() || '';
+				const looksLikeHtml = /^<!doctype html|^<html/i.test(trimmedText);
+				const nonJsonMessage = looksLikeHtml
+					? `Unexpected HTML response from ${endpoint}. The API route may be missing or the request hit the frontend app instead.`
+					: `Unexpected non-JSON response from ${endpoint}.`;
+
+				if (!response.ok) {
+					throw new ApiError(
+						response.status,
+						response.statusText,
+						nonJsonMessage,
+						endpoint,
+					);
+				}
+
+				throw new ApiError(
+					response.status,
+					response.statusText,
+					nonJsonMessage,
+					endpoint,
+				);
+			}
 
 			if (!response.ok) {
                 // Token refresh happens transparently on the backend via the
@@ -368,7 +401,7 @@ class ApiClient {
                     globalAuthModalTrigger(authContext);
                 }
 
-                const errorData = data.error;
+                const errorData = data?.error;
                 if (errorData && errorData.type) {
                        // Send a toast notification for typed errors
                     if (!noToast) {
@@ -396,7 +429,7 @@ class ApiClient {
                     throw new ApiError(
                         response.status,
                         response.statusText,
-                        data.error?.message || data.message || 'Request failed',
+                        data?.error?.message || data?.message || 'Request failed',
                         endpoint,
                     );
 			}

@@ -9,11 +9,11 @@ import { X, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import clsx from 'clsx';
 import { useAuth } from '@/contexts/auth-context';
-// import {
-// 	validateEmail,
-// 	validatePassword,
-// 	validateDisplayName,
-// } from '../../utils/validationUtils';
+import {
+	validateEmail,
+	validatePassword,
+	validateDisplayName,
+} from '../../utils/validationUtils';
 
 interface LoginModalProps {
 	isOpen: boolean;
@@ -102,28 +102,23 @@ export function LoginModal({
 	const validateForm = (): boolean => {
 		const errors: Record<string, string> = {};
 
-		// Basic email validation
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!email.trim()) {
-			errors.email = 'Email is required';
-		} else if (!emailRegex.test(email)) {
-			errors.email = 'Invalid email format';
+		const emailValidation = validateEmail(email.trim());
+		if (!emailValidation.valid) {
+			errors.email = emailValidation.error || 'Invalid email format';
 		}
 
-		// Basic password validation
-		if (!password) {
-			errors.password = 'Password is required';
-		} else if (password.length < 8) {
-			errors.password = 'Password must be at least 8 characters';
+		const passwordValidation = validatePassword(password);
+		if (!passwordValidation.valid) {
+			errors.password =
+				passwordValidation.errors?.[0] || 'Password does not meet requirements';
 		}
 
 		// Additional validation for registration
 		if (mode === 'register') {
-			// Name validation
-			if (!name.trim()) {
-				errors.name = 'Name is required';
-			} else if (name.trim().length < 2) {
-				errors.name = 'Name must be at least 2 characters';
+			const displayNameValidation = validateDisplayName(name.trim());
+			if (!displayNameValidation.valid) {
+				errors.name =
+					displayNameValidation.error || 'Name must be at least 2 characters';
 			}
 
 			// Confirm password validation
@@ -385,6 +380,11 @@ export function LoginModal({
 											</button>
 											{validationErrors.password && (
 												<p className="mt-1 text-sm text-destructive">{validationErrors.password}</p>
+											)}
+											{mode === 'register' && (
+												<p className="mt-2 text-xs text-text-tertiary">
+													Use at least 8 characters with 1 lowercase letter, 1 uppercase letter, and 1 number.
+												</p>
 											)}
 										</div>
 

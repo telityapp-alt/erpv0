@@ -252,6 +252,35 @@ function constructGatewayUrl(url: URL, providerOverride?: AIGatewayProviders): s
     return url.toString();
 }
 
+function normalizeExternalGatewayBaseUrl(rawBaseUrl: string): string {
+    const url = new URL(rawBaseUrl);
+    if (url.protocol !== 'https:') {
+        throw new Error(`Invalid external AI gateway baseUrl: only https is allowed (got ${url.protocol})`);
+    }
+
+    url.pathname = url.pathname === '/' || url.pathname === '' ? '/v1' : url.pathname.replace(/\/$/, '');
+    return url.toString();
+}
+
+function getExternalGatewayConfig(modelConfig: AIModelConfig, env: Env): { baseURL: string; apiKey: string } | null {
+    const configuredModel = env.EXTERNAL_AI_GATEWAY_MODEL?.trim();
+    const configuredBaseUrl = env.EXTERNAL_AI_GATEWAY_URL?.trim();
+    const configuredApiKey = env.EXTERNAL_AI_GATEWAY_API_KEY?.trim();
+
+    if (!configuredModel || !configuredBaseUrl || !configuredApiKey) {
+        return null;
+    }
+
+    if (modelConfig.name !== configuredModel) {
+        return null;
+    }
+
+    return {
+        baseURL: normalizeExternalGatewayBaseUrl(configuredBaseUrl),
+        apiKey: configuredApiKey,
+    };
+}
+
 export async function buildGatewayUrl(
     env: Env,
     providerOverride?: AIGatewayProviders,
@@ -416,6 +445,11 @@ export async function getConfigurationForModel(
     apiKey: string,
     defaultHeaders?: Record<string, string>,
 }> {
+    const externalGatewayConfig = getExternalGatewayConfig(modelConfig, env);
+    if (externalGatewayConfig) {
+        return externalGatewayConfig;
+    }
+
     // Determine if we're using user's own gateway (BYOK mode)
     const useUserGateway = shouldUseUserKey && userGateway && userApiToken;
 

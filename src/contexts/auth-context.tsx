@@ -132,6 +132,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           clearInterval(refreshTimerRef.current!);
         }
       } catch (error) {
+        if (error instanceof ApiError && error.status === 401) {
+          setUser(null);
+          setToken(null);
+          setSession(null);
+          clearInterval(refreshTimerRef.current!);
+          return;
+        }
         console.error('Session validation failed:', error);
       }
     }, TOKEN_REFRESH_INTERVAL);
@@ -161,7 +168,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setSession(null);
       }
     } catch (error) {
-      console.error('Auth check failed:', error);
+      if (!(error instanceof ApiError && error.status === 401)) {
+        console.error('Auth check failed:', error);
+      }
       setUser(null);
       setToken(null);
       setSession(null);

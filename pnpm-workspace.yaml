@@ -1,0 +1,15 @@
+packages:
+  - space
+allowBuilds:
+  '@mongodb-js/zstd': true
+  core-js-pure: true
+  esbuild: true
+  msgpackr-extract: true
+  node-liblzma: true
+  puppeteer: true
+  sharp: true
+  unrs-resolver: true
+  workerd: true
+minimumReleaseAgeExclude:
+  - miniflare@4.20260706.0
+  - wrangler@4.108.0
