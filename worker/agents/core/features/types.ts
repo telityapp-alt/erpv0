@@ -114,10 +114,9 @@ export const DEFAULT_FEATURE_DEFINITIONS: Record<ProjectType, Omit<FeatureDefini
 		capabilities: {
 			hasPreview: true,
 			hasLiveReload: true,
-			// Think apps keep their files in SpaceDO; previews are served by
-			// SpaceDO's `/preview/:branch` route via worker_loaders. The
-			// Container sandbox is not used.
-			requiresSandbox: false,
+			// Beta production runs app generation through the sandbox-backed
+			// agentic flow so it works without Worker Loader / Dynamic Workers.
+			requiresSandbox: true,
 			requiresWebSocket: true,
 			supportedViews: ['editor', 'preview', 'docs', 'blueprint'],
 			defaultView: 'editor',
@@ -125,7 +124,7 @@ export const DEFAULT_FEATURE_DEFINITIONS: Record<ProjectType, Omit<FeatureDefini
 			hasCustomHeaderActions: true,
 			hasCustomSidebar: false,
 			hasCustomFileFilter: false,
-			behaviorType: 'think',
+			behaviorType: 'agentic',
 		},
 	},
 	presentation: {
