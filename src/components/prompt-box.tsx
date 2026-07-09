@@ -51,7 +51,7 @@ export interface PromptBoxProps {
 	onConnectCloudflare?: () => void;
 
 	// Layout
-	variant?: 'compact' | 'expanded';
+	variant?: 'compact' | 'expanded' | 'landing';
 
 	// Slots
 	leftActions?: ReactNode;
@@ -124,8 +124,9 @@ export function PromptBox({
 	};
 
 	const isCompact = variant === 'compact';
-	const maxHeight = isCompact ? 120 : 300;
-	const borderRadius = isCompact ? 12 : 18;
+	const isLanding = variant === 'landing';
+	const maxHeight = isCompact ? 120 : isLanding ? 220 : 300;
+	const borderRadius = isCompact ? 12 : isLanding ? 14 : 18;
 
 	const autoResize = (el: HTMLTextAreaElement) => {
 		el.style.height = 'auto';
@@ -194,7 +195,7 @@ export function PromptBox({
 		);
 	}
 
-	// Expanded variant
+	// Expanded and landing variants
 	return (
 		<CreditsBanner
 			limitsData={limitsData}
@@ -202,11 +203,23 @@ export function PromptBox({
 			className={clsx('w-full z-10', className)}
 			radius={borderRadius}
 		>
-			<div className="w-full rounded-[18px] bg-bg-4 dark:bg-bg-2 border border-[#f48120]/30 focus-within:border-[#f48120]/70 transition-all duration-200">
+			<div
+				className={clsx(
+					'w-full transition-all duration-200',
+					isLanding
+						? 'rounded-[14px] border border-black/8 bg-white shadow-[0_18px_40px_rgba(17,17,26,0.08)] focus-within:border-[#ff6b2c]/60'
+						: 'rounded-[18px] border border-[#f48120]/30 bg-bg-4 focus-within:border-[#f48120]/70 dark:bg-bg-2',
+				)}
+			>
 				<form
 					ref={formRef}
 					onSubmit={handleSubmit}
-					className="flex z-10 flex-col w-full min-h-[150px] bg-bg-4 ring-0 dark:bg-bg-2 rounded-[18px] p-5 transition-all duration-200"
+					className={clsx(
+						'flex z-10 w-full flex-col ring-0 transition-all duration-200',
+						isLanding
+							? 'min-h-[152px] rounded-[14px] bg-white p-[18px] sm:p-5'
+							: 'min-h-[150px] rounded-[18px] bg-bg-4 p-5 dark:bg-bg-2',
+					)}
 				>
 					<div
 						className={clsx(
@@ -217,7 +230,12 @@ export function PromptBox({
 					>
 						{dragOverlay}
 						<textarea
-							className="w-full resize-none ring-0 z-20 outline-0 placeholder:text-text-primary/60 text-text-primary group"
+							className={clsx(
+								'w-full resize-none ring-0 z-20 outline-0 group',
+								isLanding
+									? 'min-h-[76px] text-[16px] leading-7 text-[#1d1b24] placeholder:text-[#1d1b24]/45'
+									: 'text-text-primary placeholder:text-text-primary/60',
+							)}
 							value={value}
 							placeholder={resolvedPlaceholder}
 							ref={(textarea) => {
@@ -244,7 +262,7 @@ export function PromptBox({
 					</div>
 					<div
 						className={clsx(
-							'flex items-center mt-4 pt-1',
+							'mt-4 flex items-center pt-1',
 							leftActions ? 'justify-between' : 'justify-end',
 						)}
 					>
@@ -258,7 +276,12 @@ export function PromptBox({
 							<button
 								type="submit"
 								disabled={!value.trim() || disabled || submitDisabled}
-								className="bg-accent text-white p-1 rounded-md *:size-5 transition-all duration-200 hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+								className={clsx(
+									'p-1 transition-all duration-200 disabled:cursor-not-allowed disabled:opacity-50',
+									isLanding
+										? 'rounded-[8px] bg-[#ff6b2c] text-white shadow-[0_10px_22px_rgba(255,107,44,0.22)] hover:-translate-y-0.5 hover:shadow-[0_14px_26px_rgba(255,107,44,0.28)] *:size-5'
+										: 'rounded-md bg-accent text-white hover:shadow-md *:size-5',
+								)}
 							>
 								{submitIcon ?? <ArrowRight />}
 							</button>
