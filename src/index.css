@@ -836,3 +836,148 @@
 		flex-direction: column;
 	}
 }
+
+/* === ERPeos auto-scrolling marquee === */
+@keyframes erpeos-marquee {
+	from {
+		transform: translateX(0);
+	}
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+@keyframes erpeos-marquee-reverse {
+	from {
+		transform: translateX(-50%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+.erpeos-marquee-shell {
+	position: relative;
+	overflow: hidden;
+	-webkit-mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		black 5%,
+		black 95%,
+		transparent 100%
+	);
+	mask-image: linear-gradient(
+		to right,
+		transparent 0,
+		black 5%,
+		black 95%,
+		transparent 100%
+	);
+}
+
+.erpeos-marquee-track {
+	display: flex;
+	width: max-content;
+	gap: 0.75rem;
+	animation: erpeos-marquee 35s linear infinite;
+}
+
+.erpeos-marquee-track-reverse {
+	animation: erpeos-marquee-reverse 35s linear infinite;
+}
+
+.erpeos-marquee-track:hover,
+.erpeos-marquee-track-reverse:hover {
+	animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.erpeos-marquee-track,
+	.erpeos-marquee-track-reverse {
+		animation: none;
+	}
+}
+
+/* === ERPeos gradient section backgrounds === */
+.erpeos-section-warm {
+	position: relative;
+	background:
+		radial-gradient(
+			circle at 15% 20%,
+			rgba(255, 107, 44, 0.05) 0%,
+			transparent 45%
+		),
+		radial-gradient(
+			circle at 85% 80%,
+			rgba(114, 60, 30, 0.06) 0%,
+			transparent 45%
+		);
+}
+
+.erpeos-section-cream {
+	position: relative;
+	background: linear-gradient(180deg, #f0ebe1 0%, #f5f1ea 50%, #f0ebe1 100%);
+}
+
+.erpeos-section-dark {
+	position: relative;
+	background:
+		radial-gradient(
+			circle at 50% 0%,
+			rgba(255, 107, 44, 0.1) 0%,
+			transparent 40%
+		),
+		radial-gradient(
+			circle at 80% 100%,
+			rgba(80, 60, 140, 0.12) 0%,
+			transparent 40%
+		),
+		#1d1b24;
+}
+
+.erpeos-section-cool {
+	position: relative;
+	background:
+		radial-gradient(
+			circle at 20% 30%,
+			rgba(99, 102, 241, 0.05) 0%,
+			transparent 50%
+		),
+		radial-gradient(
+			circle at 80% 70%,
+			rgba(168, 85, 247, 0.04) 0%,
+			transparent 50%
+		);
+}
+
+/* === ERPeos card hover === */
+.erpeos-card-hover {
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+}
+
+.erpeos-card-hover:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 24px rgba(29, 27, 36, 0.08);
+}
+
+/* === ERPeos marquee card === */
+.erpeos-marquee-card {
+	flex: 0 0 auto;
+	width: 280px;
+	background: #f8f6f2;
+	padding: 22px 22px 18px;
+}
+
+.erpeos-marquee-logo {
+	flex: 0 0 auto;
+	min-width: 140px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 4px;
+	padding: 16px 20px;
+	background: #f8f6f2;
+}

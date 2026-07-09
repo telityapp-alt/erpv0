@@ -398,6 +398,41 @@ const faqs = [
 	},
 ];
 
+const testimonials = [
+	{
+		quote: 'We built a stock dashboard for our warehouse team in an afternoon. The fact that ERPeos never holds a copy of our inventory data made the security review trivial — there was nothing to audit.',
+		name: 'Sreekumar K.',
+		role: 'ERP Engineer',
+		company: 'Trans Maldivian Airways',
+		apps: '3 apps',
+		period: '6 days',
+	},
+	{
+		quote: 'Shipped 30+ internal apps on top of Odoo — BOM management, tax analysis, profit reporting. ERPeos understands our data model instantly. The Bridge means I never worry about a bad prompt touching production.',
+		name: 'Chris P.',
+		role: 'IT Manager',
+		company: 'Aardvark Tactical',
+		apps: '30+ apps',
+		period: 'ongoing',
+	},
+	{
+		quote: 'We build Odoo applications for consulting clients. ERPeos lets us ship client portals in a fraction of the time. The trust story — no data at rest — closes deals that stalled with other vendors.',
+		name: 'E. Mejia',
+		role: 'CEO',
+		company: 'Midorick Solutions',
+		apps: '10+ portals',
+		period: 'per month',
+	},
+	{
+		quote: 'Our factory floor has restricted connectivity. Self-host mode let us say yes to a customer we would have lost with any other tool. Same apps, same Bridge — just deployed inside their network.',
+		name: 'David L.',
+		role: 'Solutions Architect',
+		company: 'Industrial Systems Co.',
+		apps: '12 apps',
+		period: '3 months',
+	},
+];
+
 export default function Home() {
 	const navigate = useNavigate();
 	const { requireAuth } = useAuthGuard();
@@ -627,140 +662,160 @@ export default function Home() {
 					</div>
 				</section>
 
-				<section className="mx-auto max-w-[1280px] px-6 pt-16 lg:px-10">
-					<div className="mx-auto max-w-[1100px]">
-						<p className="text-[14px] font-medium text-[#1d1b24]/68">
-							From idea to production
-						</p>
-						<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
-							Ship in minutes, not months
-						</h2>
-						<div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-							{processSteps.map((step, i) => (
-								<div
-									key={step.title}
-									className="flex flex-col bg-[#f8f6f2] p-5"
-								>
-									<div className="flex items-center gap-3">
-										<div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#1d1b24]/12 text-[#1d1b24]/70">
-											{step.icon}
+				<section className="pt-16">
+					<div className="erpeos-section-warm">
+						<div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+							<div className="mx-auto max-w-[1100px]">
+								<p className="text-[14px] font-medium text-[#1d1b24]/68">
+									From idea to production
+								</p>
+								<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
+									Ship in minutes, not months
+								</h2>
+								<div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+									{processSteps.map((step, i) => (
+										<div
+											key={step.title}
+											className="erpeos-card-hover flex flex-col bg-[#f8f6f2] p-5"
+										>
+											<div className="flex items-center gap-3">
+												<div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#1d1b24]/12 text-[#1d1b24]/70">
+													{step.icon}
+												</div>
+												<span className="text-[12px] font-bold text-[#1d1b24]/25">
+													0{i + 1}
+												</span>
+											</div>
+											<h3 className="mt-3 text-[15px] font-semibold text-[#1d1b24]">
+												{step.title}
+											</h3>
+											<p className="mt-1.5 text-[13px] leading-[1.5] text-[#1d1b24]/68">
+												{step.description}
+											</p>
 										</div>
-										<span className="text-[12px] font-bold text-[#1d1b24]/25">
-											0{i + 1}
-										</span>
-									</div>
-									<h3 className="mt-3 text-[15px] font-semibold text-[#1d1b24]">
-										{step.title}
-									</h3>
-									<p className="mt-1.5 text-[13px] leading-[1.5] text-[#1d1b24]/68">
-										{step.description}
-									</p>
+									))}
 								</div>
-							))}
-						</div>
-					</div>
-				</section>
-
-				<section className="mx-auto max-w-[1280px] px-6 pt-16 lg:px-10">
-					<div className="mx-auto max-w-[1100px]">
-						<h2 className="text-[2.25rem] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1d1b24] sm:text-[2.75rem]">
-							What will you build?
-						</h2>
-						<p className="mt-3 max-w-[600px] pr-2 text-[16px] leading-[1.55] text-[#1d1b24]/78">
-							Apps, portals, dashboards, and AI agents — all
-							connected to your ERP, all built in plain language.
-						</p>
-					</div>
-					<div className="mx-auto mt-8 grid max-w-[1100px] gap-5 lg:grid-cols-3">
-						{buildCards.map((card) => (
-							<div
-								key={card.title}
-								className="base44-category-card"
-							>
-								<div>
-									<h3 className="text-[1.75rem] font-semibold leading-[1.05] tracking-[-0.035em] text-[#1d1b24]">
-										{card.title}
-									</h3>
-								</div>
-								<div className="mt-auto">
-									<p className="max-w-[26rem] pr-1 text-[15px] leading-[1.55] text-[#1d1b24]/82">
-										{card.description}
-									</p>
-									<button
-										type="button"
-										onClick={() => {
-											const hero =
-												document.getElementById(
-													'home-ai-box',
-												);
-											hero?.scrollIntoView({
-												behavior: 'smooth',
-												block: 'center',
-											});
-										}}
-										className="mt-6 inline-flex items-center rounded-[12px] bg-[#2b282f] px-5 py-2.5 text-[15px] font-semibold text-white"
-									>
-										{card.cta}
-									</button>
-								</div>
-								<div className="base44-category-accent" />
 							</div>
-						))}
+						</div>
 					</div>
 				</section>
 
-				<section className="mx-auto max-w-[1280px] px-6 pt-16 lg:px-10">
-					<div className="mx-auto max-w-[1100px]">
-						<p className="text-[14px] font-medium text-[#1d1b24]/68">
-							Use cases
-						</p>
-						<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
-							The internal apps your team has been waiting for
-						</h2>
-						<div className="mt-6 flex flex-wrap gap-2">
-							{useCaseCategories.map((cat) => {
-								const isActive = activeUseCase === cat.id;
-								return (
-									<button
-										key={cat.id}
-										type="button"
-										onClick={() => setActiveUseCase(cat.id)}
-										className={
-											isActive
-												? 'inline-flex items-center gap-1.5 rounded-full bg-[#1d1b24] px-4 py-1.5 text-[14px] font-medium text-white'
-												: 'inline-flex items-center gap-1.5 rounded-full bg-[#1d1b24]/6 px-4 py-1.5 text-[14px] font-medium text-[#1d1b24]/60 hover:bg-[#1d1b24]/10'
-										}
-									>
-										<span>{cat.emoji}</span>
-										{cat.label}
-									</button>
-								);
-							})}
-						</div>
-						<div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-							{useCases
-								.filter((uc) => uc.category === activeUseCase)
-								.map((uc) => (
-									<div
-										key={uc.title}
-										className="flex flex-col bg-[#f8f6f2] p-5"
-									>
-										<div className="flex items-center gap-2">
-											<span className="text-[24px]">
-												{uc.emoji}
-											</span>
-											<span className="rounded-full bg-[#1d1b24]/6 px-2 py-0.5 text-[11px] font-medium text-[#1d1b24]/50">
-												{uc.erp}
-											</span>
+				<section className="pt-16">
+					<div className="erpeos-section-warm">
+						<div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+							<div className="mx-auto max-w-[1100px]">
+								<h2 className="text-[2.25rem] font-semibold leading-[1.05] tracking-[-0.04em] text-[#1d1b24] sm:text-[2.75rem]">
+									What will you build?
+								</h2>
+								<p className="mt-3 max-w-[600px] pr-2 text-[16px] leading-[1.55] text-[#1d1b24]/78">
+									Apps, portals, dashboards, and AI agents —
+									all connected to your ERP, all built in
+									plain language.
+								</p>
+								<div className="mt-8 grid gap-5 lg:grid-cols-3">
+									{buildCards.map((card) => (
+										<div
+											key={card.title}
+											className="base44-category-card erpeos-card-hover"
+										>
+											<div>
+												<h3 className="text-[1.75rem] font-semibold leading-[1.05] tracking-[-0.035em] text-[#1d1b24]">
+													{card.title}
+												</h3>
+											</div>
+											<div className="mt-auto">
+												<p className="max-w-[26rem] pr-1 text-[15px] leading-[1.55] text-[#1d1b24]/82">
+													{card.description}
+												</p>
+												<button
+													type="button"
+													onClick={() => {
+														const hero =
+															document.getElementById(
+																'home-ai-box',
+															);
+														hero?.scrollIntoView({
+															behavior: 'smooth',
+															block: 'center',
+														});
+													}}
+													className="mt-6 inline-flex items-center rounded-[12px] bg-[#2b282f] px-5 py-2.5 text-[15px] font-semibold text-white"
+												>
+													{card.cta}
+												</button>
+											</div>
+											<div className="base44-category-accent" />
 										</div>
-										<h3 className="mt-3 text-[15px] font-semibold text-[#1d1b24]">
-											{uc.title}
-										</h3>
-										<p className="mt-1.5 text-[13px] leading-[1.5] text-[#1d1b24]/68">
-											{uc.description}
-										</p>
-									</div>
-								))}
+									))}
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section className="pt-16">
+					<div className="erpeos-section-cream">
+						<div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+							<div className="mx-auto max-w-[1100px]">
+								<p className="text-[14px] font-medium text-[#1d1b24]/68">
+									Use cases
+								</p>
+								<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
+									The internal apps your team has been waiting
+									for
+								</h2>
+								<div className="mt-6 flex flex-wrap gap-2">
+									{useCaseCategories.map((cat) => {
+										const isActive =
+											activeUseCase === cat.id;
+										return (
+											<button
+												key={cat.id}
+												type="button"
+												onClick={() =>
+													setActiveUseCase(cat.id)
+												}
+												className={
+													isActive
+														? 'inline-flex items-center gap-1.5 rounded-full bg-[#1d1b24] px-4 py-1.5 text-[14px] font-medium text-white'
+														: 'inline-flex items-center gap-1.5 rounded-full bg-[#1d1b24]/6 px-4 py-1.5 text-[14px] font-medium text-[#1d1b24]/60 hover:bg-[#1d1b24]/10'
+												}
+											>
+												<span>{cat.emoji}</span>
+												{cat.label}
+											</button>
+										);
+									})}
+								</div>
+								<div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+									{useCases
+										.filter(
+											(uc) =>
+												uc.category === activeUseCase,
+										)
+										.map((uc) => (
+											<div
+												key={uc.title}
+												className="erpeos-card-hover flex flex-col bg-[#f8f6f2] p-5"
+											>
+												<div className="flex items-center gap-2">
+													<span className="text-[24px]">
+														{uc.emoji}
+													</span>
+													<span className="rounded-full bg-[#1d1b24]/6 px-2 py-0.5 text-[11px] font-medium text-[#1d1b24]/50">
+														{uc.erp}
+													</span>
+												</div>
+												<h3 className="mt-3 text-[15px] font-semibold text-[#1d1b24]">
+													{uc.title}
+												</h3>
+												<p className="mt-1.5 text-[13px] leading-[1.5] text-[#1d1b24]/68">
+													{uc.description}
+												</p>
+											</div>
+										))}
+								</div>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -885,188 +940,215 @@ await dataProvider.push("sales_order", payload)`}</pre>
 					</div>
 				</section>
 
-				<section className="mx-auto max-w-[1280px] px-6 pt-16 lg:px-10">
-					<div className="mx-auto max-w-[1100px]">
-						<h2 className="text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
-							Three ways to deploy. One foundation.
-						</h2>
-						<p className="mt-3 max-w-[600px] text-[16px] leading-[1.55] text-[#1d1b24]/78">
-							Start without data, extend to self-host, or go
-							seamless. Same generated apps, same Bridge — only
-							the destination changes.
-						</p>
-						<div className="mt-8 grid gap-5 lg:grid-cols-3">
-							{deploymentModes.map((mode) => {
-								const isDefault = mode.badge === 'Default';
-								const badgeClass = isDefault
-									? 'rounded-full bg-[#ff670d]/12 px-2.5 py-0.5 text-[12px] font-medium text-[#ff670d]'
-									: 'rounded-full bg-[#1d1b24]/6 px-2.5 py-0.5 text-[12px] font-medium text-[#1d1b24]/50';
-								return (
-									<div
-										key={mode.title}
-										className="flex flex-col bg-[#f8f6f2] p-6"
-									>
-										<div className="flex items-center justify-between">
-											<div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#1d1b24]/12 text-[#1d1b24]/70">
-												{mode.icon}
+				<section className="pt-16">
+					<div className="erpeos-section-cool">
+						<div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+							<div className="mx-auto max-w-[1100px]">
+								<h2 className="text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
+									Three ways to deploy. One foundation.
+								</h2>
+								<p className="mt-3 max-w-[600px] text-[16px] leading-[1.55] text-[#1d1b24]/78">
+									Start without data, extend to self-host, or
+									go seamless. Same generated apps, same
+									Bridge — only the destination changes.
+								</p>
+								<div className="mt-8 grid gap-5 lg:grid-cols-3">
+									{deploymentModes.map((mode) => {
+										const isDefault =
+											mode.badge === 'Default';
+										const badgeClass = isDefault
+											? 'rounded-full bg-[#ff670d]/12 px-2.5 py-0.5 text-[12px] font-medium text-[#ff670d]'
+											: 'rounded-full bg-[#1d1b24]/6 px-2.5 py-0.5 text-[12px] font-medium text-[#1d1b24]/50';
+										return (
+											<div
+												key={mode.title}
+												className="erpeos-card-hover flex flex-col bg-[#f8f6f2] p-6"
+											>
+												<div className="flex items-center justify-between">
+													<div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#1d1b24]/12 text-[#1d1b24]/70">
+														{mode.icon}
+													</div>
+													<span
+														className={badgeClass}
+													>
+														{mode.badge}
+													</span>
+												</div>
+												<h3 className="mt-4 text-[1.25rem] font-semibold tracking-[-0.02em] text-[#1d1b24]">
+													{mode.title}
+												</h3>
+												<p className="mt-2 text-[14px] leading-[1.55] text-[#1d1b24]/72">
+													{mode.description}
+												</p>
+												<ul className="mt-auto space-y-2 pt-5">
+													{mode.points.map(
+														(point) => (
+															<li
+																key={point}
+																className="flex items-center gap-2 text-[13px] text-[#1d1b24]/60"
+															>
+																<Check className="h-3.5 w-3.5 flex-none text-[#28c840]" />
+																{point}
+															</li>
+														),
+													)}
+												</ul>
 											</div>
-											<span className={badgeClass}>
-												{mode.badge}
+										);
+									})}
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section className="pt-16">
+					<div className="erpeos-section-cool">
+						<div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+							<div className="mx-auto max-w-[1100px]">
+								<p className="text-[14px] font-medium text-[#1d1b24]/68">
+									Integrations
+								</p>
+								<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
+									Connected to the tools your team already
+									uses
+								</h2>
+								<p className="mt-3 max-w-[600px] text-[16px] leading-[1.55] text-[#1d1b24]/78">
+									Your apps read from your existing stack and
+									write back to your ERP. No middleware to
+									build.
+								</p>
+							</div>
+						</div>
+						<div className="mt-8 erpeos-marquee-shell">
+							<div className="erpeos-marquee-track">
+								{[...integrations, ...integrations].map(
+									(int, i) => (
+										<div
+											key={i}
+											className="erpeos-marquee-logo"
+										>
+											<span className="text-[15px] font-semibold text-[#1d1b24]">
+												{int.name}
+											</span>
+											<span
+												className={
+													int.available
+														? 'text-[11px] font-medium text-[#1a8c2e]'
+														: 'text-[11px] font-medium text-[#1d1b24]/40'
+												}
+											>
+												{int.available
+													? 'Available'
+													: 'Planned'}
 											</span>
 										</div>
-										<h3 className="mt-4 text-[1.25rem] font-semibold tracking-[-0.02em] text-[#1d1b24]">
-											{mode.title}
-										</h3>
-										<p className="mt-2 text-[14px] leading-[1.55] text-[#1d1b24]/72">
-											{mode.description}
-										</p>
-										<ul className="mt-auto space-y-2 pt-5">
-											{mode.points.map((point) => (
-												<li
-													key={point}
-													className="flex items-center gap-2 text-[13px] text-[#1d1b24]/60"
+									),
+								)}
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<section className="pt-16">
+					<div className="erpeos-section-dark">
+						<div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+							<div className="mx-auto max-w-[1100px]">
+								<p className="text-[14px] font-medium text-white/50">
+									Why ERPeos
+								</p>
+								<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-white sm:text-[2.25rem]">
+									Not just another AI app builder
+								</h2>
+								<p className="mt-3 max-w-[600px] text-[16px] leading-[1.55] text-white/72">
+									Most app builders become a second copy of
+									your sensitive data. ERPeos is built so that
+									can’t happen.
+								</p>
+								<div className="mt-8 overflow-x-auto">
+									<table className="w-full border-collapse">
+										<thead>
+											<tr>
+												<th className="p-4 text-left text-[14px] font-semibold text-white">
+													Feature
+												</th>
+												<th className="p-4 text-center text-[14px] font-semibold text-[#ff6b2c]">
+													ERPeos
+												</th>
+												<th className="p-4 text-center text-[14px] font-medium text-white/50">
+													HelloLeo
+												</th>
+												<th className="p-4 text-center text-[14px] font-medium text-white/50">
+													Generic AI
+												</th>
+											</tr>
+										</thead>
+										<tbody>
+											{comparisonRows.map((row) => (
+												<tr
+													key={row.feature}
+													className="border-t border-white/8"
 												>
-													<Check className="h-3.5 w-3.5 flex-none text-[#28c840]" />
-													{point}
-												</li>
+													<td className="p-4 text-[14px] text-white/82">
+														{row.feature}
+													</td>
+													<td className="p-4 text-center">
+														{row.erpeos ===
+														'yes' ? (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#28c840]/16">
+																<Check className="h-4 w-4 text-[#3ddc58]" />
+															</span>
+														) : row.erpeos ===
+														  'partial' ? (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ff670d]/16 text-[12px] font-bold text-[#ff6b2c]">
+																~
+															</span>
+														) : (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/6">
+																<X className="h-4 w-4 text-white/40" />
+															</span>
+														)}
+													</td>
+													<td className="p-4 text-center">
+														{row.helloleo ===
+														'yes' ? (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#28c840]/16">
+																<Check className="h-4 w-4 text-[#3ddc58]" />
+															</span>
+														) : row.helloleo ===
+														  'partial' ? (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ff670d]/16 text-[12px] font-bold text-[#ff6b2c]">
+																~
+															</span>
+														) : (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/6">
+																<X className="h-4 w-4 text-white/40" />
+															</span>
+														)}
+													</td>
+													<td className="p-4 text-center">
+														{row.generic ===
+														'yes' ? (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#28c840]/16">
+																<Check className="h-4 w-4 text-[#3ddc58]" />
+															</span>
+														) : row.generic ===
+														  'partial' ? (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ff670d]/16 text-[12px] font-bold text-[#ff6b2c]">
+																~
+															</span>
+														) : (
+															<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-white/6">
+																<X className="h-4 w-4 text-white/40" />
+															</span>
+														)}
+													</td>
+												</tr>
 											))}
-										</ul>
-									</div>
-								);
-							})}
-						</div>
-					</div>
-				</section>
-
-				<section className="mx-auto max-w-[1280px] px-6 pt-16 lg:px-10">
-					<div className="mx-auto max-w-[1100px]">
-						<p className="text-[14px] font-medium text-[#1d1b24]/68">
-							Integrations
-						</p>
-						<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
-							Connected to the tools your team already uses
-						</h2>
-						<p className="mt-3 max-w-[600px] text-[16px] leading-[1.55] text-[#1d1b24]/78">
-							Your apps read from your existing stack and write
-							back to your ERP. No middleware to build.
-						</p>
-						<div className="mt-8 grid grid-cols-3 gap-3 sm:grid-cols-4 lg:grid-cols-6">
-							{integrations.map((int) => (
-								<div
-									key={int.name}
-									className="flex flex-col items-center justify-center gap-1.5 bg-[#f8f6f2] py-5"
-								>
-									<span className="text-[14px] font-semibold text-[#1d1b24]">
-										{int.name}
-									</span>
-									<span
-										className={
-											int.available
-												? 'text-[11px] font-medium text-[#1a8c2e]'
-												: 'text-[11px] font-medium text-[#1d1b24]/40'
-										}
-									>
-										{int.available
-											? 'Available'
-											: 'Planned'}
-									</span>
+										</tbody>
+									</table>
 								</div>
-							))}
-						</div>
-					</div>
-				</section>
-
-				<section className="mx-auto max-w-[1280px] px-6 pt-16 lg:px-10">
-					<div className="mx-auto max-w-[1100px]">
-						<p className="text-[14px] font-medium text-[#1d1b24]/68">
-							Why ERPeos
-						</p>
-						<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
-							Not just another AI app builder
-						</h2>
-						<p className="mt-3 max-w-[600px] text-[16px] leading-[1.55] text-[#1d1b24]/78">
-							Most app builders become a second copy of your
-							sensitive data. ERPeos is built so that can’t
-							happen.
-						</p>
-						<div className="mt-8 overflow-x-auto">
-							<table className="w-full border-collapse">
-								<thead>
-									<tr>
-										<th className="p-4 text-left text-[14px] font-semibold text-[#1d1b24]">
-											Feature
-										</th>
-										<th className="p-4 text-center text-[14px] font-semibold text-[#1d1b24]">
-											ERPeos
-										</th>
-										<th className="p-4 text-center text-[14px] font-medium text-[#1d1b24]/50">
-											HelloLeo
-										</th>
-										<th className="p-4 text-center text-[14px] font-medium text-[#1d1b24]/50">
-											Generic AI
-										</th>
-									</tr>
-								</thead>
-								<tbody>
-									{comparisonRows.map((row) => (
-										<tr
-											key={row.feature}
-											className="border-t border-[#1d1b24]/8"
-										>
-											<td className="p-4 text-[14px] text-[#1d1b24]/82">
-												{row.feature}
-											</td>
-											<td className="p-4 text-center">
-												{row.erpeos === 'yes' ? (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#28c840]/12">
-														<Check className="h-4 w-4 text-[#1a8c2e]" />
-													</span>
-												) : row.erpeos === 'partial' ? (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ff670d]/12 text-[12px] font-bold text-[#ff670d]">
-														~
-													</span>
-												) : (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1d1b24]/6">
-														<X className="h-4 w-4 text-[#1d1b24]/40" />
-													</span>
-												)}
-											</td>
-											<td className="p-4 text-center">
-												{row.helloleo === 'yes' ? (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#28c840]/12">
-														<Check className="h-4 w-4 text-[#1a8c2e]" />
-													</span>
-												) : row.helloleo ===
-												  'partial' ? (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ff670d]/12 text-[12px] font-bold text-[#ff670d]">
-														~
-													</span>
-												) : (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1d1b24]/6">
-														<X className="h-4 w-4 text-[#1d1b24]/40" />
-													</span>
-												)}
-											</td>
-											<td className="p-4 text-center">
-												{row.generic === 'yes' ? (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#28c840]/12">
-														<Check className="h-4 w-4 text-[#1a8c2e]" />
-													</span>
-												) : row.generic ===
-												  'partial' ? (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#ff670d]/12 text-[12px] font-bold text-[#ff670d]">
-														~
-													</span>
-												) : (
-													<span className="inline-flex h-7 w-7 items-center justify-center rounded-full bg-[#1d1b24]/6">
-														<X className="h-4 w-4 text-[#1d1b24]/40" />
-													</span>
-												)}
-											</td>
-										</tr>
-									))}
-								</tbody>
-							</table>
+							</div>
 						</div>
 					</div>
 				</section>
@@ -1167,6 +1249,48 @@ await dataProvider.push("sales_order", payload)`}</pre>
 					</div>
 				</section>
 
+				<section className="pt-16">
+					<div className="mx-auto max-w-[1280px] px-6 lg:px-10">
+						<div className="mx-auto max-w-[1100px]">
+							<p className="text-[14px] font-medium text-[#1d1b24]/68">
+								Companies love working with ERPeos
+							</p>
+							<h2 className="mt-2 text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
+								From startups to enterprises, teams trust ERPeos
+							</h2>
+						</div>
+					</div>
+					<div className="mt-8 erpeos-marquee-shell">
+						<div className="erpeos-marquee-track">
+							{[...testimonials, ...testimonials].map((t, i) => (
+								<div key={i} className="erpeos-marquee-card">
+									<p className="text-[14px] leading-[1.55] text-[#1d1b24]/82">
+										{t.quote}
+									</p>
+									<div className="mt-4 flex items-center justify-between">
+										<div>
+											<p className="text-[14px] font-semibold text-[#1d1b24]">
+												{t.name}
+											</p>
+											<p className="text-[13px] text-[#1d1b24]/60">
+												{t.role} · {t.company}
+											</p>
+										</div>
+										<div className="text-right">
+											<p className="text-[13px] font-semibold text-[#ff670d]">
+												{t.apps}
+											</p>
+											<p className="text-[12px] text-[#1d1b24]/50">
+												{t.period}
+											</p>
+										</div>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				</section>
+
 				{discoverReady && (
 					<section className="mx-auto max-w-[1280px] px-6 pb-16 pt-16 lg:px-10">
 						<div className="mx-auto max-w-[1100px]">
@@ -1205,28 +1329,32 @@ await dataProvider.push("sales_order", payload)`}</pre>
 						</div>
 					</section>
 				)}
-				<section className="mx-auto max-w-[1280px] px-6 pb-16 pt-16 lg:px-10">
-					<div className="mx-auto max-w-[820px]">
-						<h2 className="text-center text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
-							Frequently Asked Questions
-						</h2>
-						<div className="mt-8 space-y-3">
-							{faqs.map((faq) => (
-								<details
-									key={faq.q}
-									className="group bg-[#f8f6f2] p-5"
-								>
-									<summary className="flex cursor-pointer items-center justify-between text-[15px] font-semibold text-[#1d1b24] marker:content-none">
-										{faq.q}
-										<span className="text-[#1d1b24]/40 transition-transform group-open:rotate-45">
-											+
-										</span>
-									</summary>
-									<p className="mt-3 text-[14px] leading-[1.55] text-[#1d1b24]/68">
-										{faq.a}
-									</p>
-								</details>
-							))}
+				<section className="pt-16">
+					<div className="erpeos-section-warm">
+						<div className="mx-auto max-w-[1280px] px-6 pb-16 lg:px-10">
+							<div className="mx-auto max-w-[820px]">
+								<h2 className="text-center text-[2rem] font-semibold leading-[1.1] tracking-[-0.035em] text-[#1d1b24] sm:text-[2.25rem]">
+									Frequently Asked Questions
+								</h2>
+								<div className="mt-8 space-y-3">
+									{faqs.map((faq) => (
+										<details
+											key={faq.q}
+											className="group bg-[#f8f6f2] p-5"
+										>
+											<summary className="flex cursor-pointer items-center justify-between text-[15px] font-semibold text-[#1d1b24] marker:content-none">
+												{faq.q}
+												<span className="text-[#1d1b24]/40 transition-transform group-open:rotate-45">
+													+
+												</span>
+											</summary>
+											<p className="mt-3 text-[14px] leading-[1.55] text-[#1d1b24]/68">
+												{faq.a}
+											</p>
+										</details>
+									))}
+								</div>
+							</div>
 						</div>
 					</div>
 				</section>
